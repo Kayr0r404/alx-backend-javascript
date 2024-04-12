@@ -1,13 +1,13 @@
 /* eslint-disable import/extensions */
+/* eslint-disable  no-unused-vars */
 import Currency from './3-currency.js';
 
-export default class Pricing extends Currency {
+export default class Pricing {
   /* eslint-disable no-underscore-dangle */
   constructor(amount, currency) {
     if (typeof amount !== 'number') {
       throw new TypeError('Amount must be a number');
     }
-    super(currency._code, currency._name);
     this._amount = amount;
     this._currency = currency;
   }
