@@ -1,26 +1,24 @@
-
-const calculateNumber = require('./1-calcul');
-const assert = require('assert');
+const calculateNumber = require('./2-calcul_chai');
+const expect = require('chai').expect
 
 describe('calculateNumber', () => {
-it('rounding of a', () => {
-    assert.equal(calculateNumber('SUM', 2.7, 3), 6);
-    assert.equal(calculateNumber('SUBTRACT', 1.4, 2), -1);
-    assert.equal(calculateNumber('DIVIDE', 1.5, 4), 0.5);
+    it('rounding of a', () => {
+        expect(calculateNumber('SUM', 2.7, 3)).to.be.equal(6); // 3 + 3 = 6
+        expect(calculateNumber('SUBTRACT', 2.7, 3)).to.be.equal(0); // 3 - 3 = 0
+        expect(calculateNumber('DIVIDE', 1.5, 4)).to.be.equal(0.5); // 2 / 4 = 0.5
+    });
 
-});
+    it('rounding of b', () => {
+        expect(calculateNumber("SUM", 1, 3.4)).to.be.equal(4); // 1 + 3 = 4
+        expect(calculateNumber("SUBTRACT", 3, 3.9)).to.be.equal(-1); // 3 - 4 = -1
+        expect(calculateNumber("DIVIDE", 4, 1.7)).to.be.equal(2); // 4 / 2 = 2
+        expect(calculateNumber("DIVIDE", 4, 0.3)).to.be.equal('Error'); // 4 / 0 = Error
+    });
 
-it('rounding of b', () => {
-    assert.equal(calculateNumber("SUM", 1, 3.4), 4);
-    assert.equal(calculateNumber("SUBTRACT", 3, 3.9), -1);
-    assert.equal(calculateNumber("DIVIDE", 4, 1.7), 2);
-    assert.equal(calculateNumber("DIVIDE", 4, 0.3), 'Error')
-});
-
-it('rounding of a and b', () => {
-    assert.equal(calculateNumber("SUM", 1.4, 3.4), 4);
-    assert.equal(calculateNumber("SUBTRACT", 3.6, 3.9), 0);
-    assert.equal(calculateNumber("DIVIDE", 5.9, 1.7), 3);
-    assert.equal(calculateNumber("DIVIDE", 4.9, 0.3), 'Error')
-});
+    it('rounding of a and b', () => {
+        expect(calculateNumber("SUM", 1.4, 3.4)).to.be.equal(4); // 1 + 3 = 4
+        expect(calculateNumber("SUBTRACT", 3.6, 3.9)).to.be.equal(0); // 4 - 4 = 0
+        expect(calculateNumber("DIVIDE", 5.9, 1.7)).to.be.equal(3); // 6 / 2 = 3
+        expect(calculateNumber("DIVIDE", 4.9, 0.3)).to.be.equal('Error'); // 5 / 0 = Error
+    });
 });
