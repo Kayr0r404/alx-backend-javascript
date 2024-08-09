@@ -1,15 +1,13 @@
 const http = require('node:http');
 
-const port = 1245;
-
 const app = http.createServer(function (request, response) {
   response.statusCode = 200;
   response.setHeader('Content-Type', 'text/plain'); // Set the content type to plain text
   response.end('Hello Holberton School!');
 });
 
-app.listen(port, () => {
-  console.log(`server listening on port ${port}`);
+app.listen(1245, () => {
+  console.log(`server listening on port ${1245}`);
 });
 
 module.exports = app;
