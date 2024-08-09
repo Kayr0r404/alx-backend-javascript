@@ -1,16 +1,15 @@
-const http = require('http');
+const http = require('node:http');
 
-// Create the server and assign it to the variable app
-const app = http.createServer((req, res) => {
-    res.statusCode = 200; // Set the status code to 200 (OK)
-    res.setHeader('Content-Type', 'text/plain'); // Set the content type to plain text
-    res.end('Hello Holberton School!'); // Send the response text
+const port = 1245;
+
+const app = http.createServer((request, response) => {
+  response.statusCode = 200;
+  response.setHead({ 'Content-Type': 'text/html' });
+  response.end('Hello Holberton School!');
 });
 
-// Make the server listen on port 1245
-app.listen(1245, () => {
-    console.log('Server listening on port 1245');
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
 });
 
-// Export the app variable
 module.exports = app;
