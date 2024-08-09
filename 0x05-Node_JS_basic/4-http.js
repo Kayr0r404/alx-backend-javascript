@@ -1,4 +1,4 @@
-const http = require('node:http');
+const http = require('http');
 
 const app = http.createServer(function (request, response) {
   response.statusCode = 200;
