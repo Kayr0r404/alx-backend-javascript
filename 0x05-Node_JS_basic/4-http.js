@@ -1,6 +1,6 @@
 const http = require('http');
 
-const app = http.createServer(function (request, response) {
+const app = http.createServer((request, response) => {
   response.statusCode = 200;
   response.setHeader('Content-Type', 'text/plain'); // Set the content type to plain text
   response.end('Hello Holberton School!');
