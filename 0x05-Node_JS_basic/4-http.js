@@ -2,9 +2,9 @@ const http = require('node:http');
 
 const port = 1245;
 
-const app = http.createServer((request, response) => {
+const app = http.createServer(function (request, response) {
   response.statusCode = 200;
-  response.setHeader('Content-Type', 'text/plain');
+  response.setHeader('Content-Type', 'text/plain'); // Set the content type to plain text
   response.end('Hello Holberton School!');
 });
 
