@@ -9,7 +9,7 @@ const countStudents = (file) => new Promise((resolve, reject) => {
 
     const rows = data.trim().split('\n');
     const headers = rows[0].split(',');
-    const students = rows.slice(1).map(row => row.split(','));
+    const students = rows.slice(1).map((row) => row.split(','));
 
     if (students.length === 0) {
       console.log('No students found in the database.');
