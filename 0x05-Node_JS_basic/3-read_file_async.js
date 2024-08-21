@@ -2,28 +2,40 @@ const fs = require('fs');
 
 const countStudents = (file) => new Promise((resolve, reject) => {
   fs.readFile(file, 'utf-8', (err, data) => {
-    if (err) reject(new Error('Cannot load the database'));
-    const newData = [];
-    const arrayOfFields = [];
-    data.split('\n').forEach((element) => {
-      if (element !== '') {
-        newData.push(element.split(','));
-      }
-    });
-    for (let i = 1, indexOfField = newData[0].indexOf('field'); i < newData.length; i += 1) {
-      if (!arrayOfFields.includes(newData[i][indexOfField])) {
-        arrayOfFields.push(newData[i][indexOfField]);
-      }
+    if (err) {
+      reject(new Error('Cannot load the database'));
+      return;
     }
-    console.log(`Number of students: ${newData.length - 1}`);
-    arrayOfFields.forEach((element) => {
-      const list = [];
-      newData.forEach((e) => {
-        const indexofFirstName = newData[0].indexOf('firstname');
-        if (e.includes(element)) list.push(e[indexofFirstName]);
-      });
-      console.log(`Number of students in ${element}: ${list.length}. List: ${list.join(', ')}`);
-    });
+
+    const rows = data.trim().split('\n');
+    const headers = rows[0].split(',');
+    const students = rows.slice(1).map(row => row.split(','));
+
+    if (students.length === 0) {
+      console.log('No students found in the database.');
+      resolve(true);
+      return;
+    }
+
+    const fieldIndex = headers.indexOf('field');
+    const firstNameIndex = headers.indexOf('firstname');
+
+    const studentsByField = students.reduce((acc, student) => {
+      const field = student[fieldIndex];
+      const firstName = student[firstNameIndex];
+      if (!acc[field]) {
+        acc[field] = [];
+      }
+      acc[field].push(firstName);
+      return acc;
+    }, {});
+
+    console.log(`Number of students: ${students.length}`);
+
+    for (const [field, names] of Object.entries(studentsByField)) {
+      console.log(`Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
+    }
+
     resolve(true);
   });
 });
