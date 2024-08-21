@@ -24,8 +24,8 @@ const countStudents = (file) => new Promise((resolve, reject) => {
       });
       console.log(`Number of students in ${element}: ${list.length}. List: ${list.join(', ')}`);
     });
+    resolve(true);
   });
-  resolve(true);
 });
 
 module.exports = countStudents;
