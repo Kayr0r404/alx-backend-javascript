@@ -5,39 +5,40 @@ const port = 1245;
 const host = 'localhost';
 
 const countStudents = (file) => new Promise((resolve, reject) => {
-  fs.readFile(file, 'utf-8', (err, data) => {
-    if (err) {
-      reject(err);
-      return;
-    }
-    const newData = [];
-    const arrayOfFields = [];
-    const report = ['This is the list of our students'];
+  if (!file) {
+    reject(new Error('Cannot load the database'));
+  }
+  if (file) {
+    fs.readFile(file, 'utf-8', (err, data) => {
+      const newData = [];
+      const arrayOfFields = [];
+      const report = ['This is the list of our students'];
 
-    data.split('\n').forEach((element) => {
-      if (element !== '') {
-        newData.push(element.split(','));
-      }
-    });
-    for (let i = 1, indexOfField = newData[0].indexOf('field'); i < newData.length; i += 1) {
-      if (!arrayOfFields.includes(newData[i][indexOfField])) {
-        arrayOfFields.push(newData[i][indexOfField]);
-      }
-    }
-    report.push(`Number of students: ${newData.length - 1}`);
-    arrayOfFields.forEach((element) => {
-      const list = [];
-      newData.forEach((e) => {
-        const indexofFirstName = newData[0].indexOf('firstname');
-        if (e.includes(element)) list.push(e[indexofFirstName]);
+      data.split('\n').forEach((element) => {
+        if (element !== '') {
+          newData.push(element.split(','));
+        }
       });
-      report.push(`Number of students in ${element}: ${list.length}. List: ${list.join(', ')}`);
+      for (let i = 1, indexOfField = newData[0].indexOf('field'); i < newData.length; i += 1) {
+        if (!arrayOfFields.includes(newData[i][indexOfField])) {
+          arrayOfFields.push(newData[i][indexOfField]);
+        }
+      }
+      report.push(`Number of students: ${newData.length - 1}`);
+      arrayOfFields.forEach((element) => {
+        const list = [];
+        newData.forEach((e) => {
+          const indexofFirstName = newData[0].indexOf('firstname');
+          if (e.includes(element)) list.push(e[indexofFirstName]);
+        });
+        report.push(`Number of students in ${element}: ${list.length}. List: ${list.join(', ')}`);
+      });
+      resolve(report);
     });
-    resolve(report);
-  });
+  }
 });
 
-const database = process.argv[2];
+const database = process.argv.length > 2 ? process.argv[2] : '';
 
 const requestListner = (request, response) => {
   response.writeHead(200, { 'content-Type': 'text/csv' });
@@ -47,7 +48,6 @@ const requestListner = (request, response) => {
         const resultTxt = results.join('\n');
         response.end(resultTxt);
       }).catch((error) => {
-        response.writeHead(500, { 'Content-Type': 'text/plain' });
         response.end(error.message);
       });
       break;
