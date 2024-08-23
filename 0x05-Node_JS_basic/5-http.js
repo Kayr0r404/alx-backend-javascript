@@ -42,13 +42,13 @@ const database = process.argv[2];
 const requestListner = (request, response) => {
   response.writeHead(200, { 'content-Type': 'text/csv' });
   switch (request.url) {
-    case '/':
-      response.end('Hello Holberton School!');
-      break;
     case '/students':
       countStudents(database).then((results) => {
         const resultTxt = results.join('\n');
         response.end(resultTxt);
+      }).catch((error) => {
+        response.writeHead(500, { 'Content-Type': 'text/plain' });
+        response.end(error.message);
       });
       break;
     default:
@@ -60,7 +60,7 @@ const requestListner = (request, response) => {
 const app = http.createServer(requestListner);
 
 app.listen(port, host, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`Server listening on port ${'localhost'}:${port}`);
 });
 
-module.exports = { app, countStudents };
+module.exports = app;
