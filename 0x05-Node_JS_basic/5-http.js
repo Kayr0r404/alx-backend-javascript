@@ -4,8 +4,6 @@ const fs = require('fs');
 const port = 1245;
 const host = 'localhost';
 
-// const fs = require('fs');
-
 const countStudents = (file) => new Promise((resolve, reject) => {
   fs.readFile(file, 'utf-8', (err, data) => {
     if (err) {
@@ -52,6 +50,10 @@ const requestListner = (request, response) => {
         const resultTxt = results.join('\n');
         response.end(resultTxt);
       });
+      break;
+    default:
+      response.end('Hello Holberton School!');
+      break;
   }
 };
 
@@ -60,3 +62,5 @@ const app = http.createServer(requestListner);
 app.listen(port, host, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+module.exports = { app, countStudents };
