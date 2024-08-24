@@ -5,14 +5,15 @@ const port = 1245;
 const host = 'localhost';
 
 const countStudents = (file) => new Promise((resolve, reject) => {
+  const report = ['This is the list of our students'];
   if (!file) {
-    reject(new Error('Cannot load the database'));
+    report.push('Cannot load the database');
+    reject(new Error(report.join('\n')));
   }
   if (file) {
     fs.readFile(file, 'utf-8', (err, data) => {
       const newData = [];
       const arrayOfFields = [];
-      const report = ['This is the list of our students'];
 
       data.split('\n').forEach((element) => {
         if (element !== '') {
