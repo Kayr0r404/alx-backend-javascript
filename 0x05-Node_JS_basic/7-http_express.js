@@ -6,12 +6,12 @@ const database = process.argv.length > 2 ? process.argv[2] : '';
 
 const countStudents = (file) => new Promise((resolve, reject) => {
   if (!file) {
-    return reject(new Error('Cannot load the database'));
+    reject(new Error('Cannot load the database'));
   }
-  
+
   fs.readFile(file, 'utf-8', (err, data) => {
     if (err) {
-      return reject(new Error('Cannot load the database'));
+      reject(new Error('Cannot load the database'));
     }
 
     const newData = [];
