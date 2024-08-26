@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const readDatabase = (filePath) => new Promise((resolve, reject) => {
     if (!filePath) {
@@ -40,4 +40,4 @@ const readDatabase = (filePath) => new Promise((resolve, reject) => {
     });
 });
 
-module.exports = readDatabase;
+export default readDatabase;

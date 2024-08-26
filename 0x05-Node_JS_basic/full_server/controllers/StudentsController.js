@@ -1,10 +1,11 @@
-const readData = require('../utils');
+import readData from '../utils.js';
+const DB_FILE = process.argv[2];
 
 class StudentsController {
     static getAllStudents(request, response) {
         const firstLine = ['This is the list of our students'];
         
-        readData('file')
+        readData(DB_FILE)
             .then(results => {
                 Object.entries(results).forEach(([field, students]) => {
                     students.sort();
@@ -20,7 +21,7 @@ class StudentsController {
     static getAllStudentsByMajor(request, response) {
         const major = request.params.major;
 
-        readData('file')
+        readData(DB_FILE)
             .then(results => {
                 if (!results[major]) {
                     return response.status(500).send('Major parameter must be CS or SWE');
@@ -33,4 +34,4 @@ class StudentsController {
     }
 }
 
-module.exports = StudentsController;
+export default StudentsController;

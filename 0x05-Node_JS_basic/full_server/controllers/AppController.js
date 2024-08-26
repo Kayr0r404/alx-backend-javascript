@@ -6,4 +6,4 @@ class AppController {
         response.end('Hello Holberton School!');
     }
 }
-module.exports = AppController;
+export default AppController;
